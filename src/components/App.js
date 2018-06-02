@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 // Create an object will all the actions of the app
 import * as actions from '../actions';
 
+import Header from './Header/Header';
+import Landing from './pages/Landing/Landing';
 import Cocktails from './pages/cocktails/Cocktails';
 
 
