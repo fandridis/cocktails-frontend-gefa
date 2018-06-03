@@ -42,7 +42,7 @@ class Ingredients extends Component {
 
   async componentDidMount() {
     console.log('componentDidMount @ Dashboard.js with props: ', this.props);
-    let res = await axios.get('/api/ingredients/getAll') 
+    let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getAll') 
     console.log('res.data: ', res.data);
     res.data.theIngredients.forEach(ingredient => {
       ingredient.value = ingredient.name;
@@ -73,7 +73,7 @@ class Ingredients extends Component {
       type: this.state.type  
     }
 
-    axios.post('/api/ingredients/create', { ingredient: ingredient })
+    axios.post('https://cocktails-api-gefa.herokuapp.com/api/ingredients/create', { ingredient: ingredient })
     .then(result => {
       console.log('result: ', result);
     })

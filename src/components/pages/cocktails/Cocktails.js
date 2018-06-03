@@ -73,7 +73,7 @@ class Cocktails extends Component {
 
   async componentDidMount() {
     console.log('componentDidMount @ Dashboard.js with props: ', this.props);
-    let res = await axios.get('/api/ingredients/getAll') 
+    let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getAll') 
     console.log('res.data: ', res.data);
     res.data.theIngredients.forEach(ingredient => {
       ingredient.value = ingredient.name;
@@ -154,7 +154,7 @@ class Cocktails extends Component {
     
     cocktail.baseSpirit = highestContentSpirit;
 
-    axios.post('/api/cocktails/create', { cocktail: cocktail })
+    axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/create', { cocktail: cocktail })
     .then(result => {
       console.log('result: ', result);
     })
