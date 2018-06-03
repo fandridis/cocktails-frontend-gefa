@@ -4,10 +4,11 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import * as actions from '../../../actions';
-import { Redirect } from 'react-router-dom';
-import LoginPage from '../login/Login';
+// import { Redirect } from 'react-router-dom';
+
+import './Landing.css';
 
 class Landing extends Component {
 
@@ -23,8 +24,17 @@ class Landing extends Component {
   }
 
   render() {
-    <h1>Landing Page!</h1>
+    return (
+      <div className="landing-main">
+        <h1 className="landing__title">Landing Page</h1>
+        <div className="landing__routes">
+        <div className="landing__route"><Link to="/cocktails">Create Cocktail</Link></div>
+        <div className="landing__route"><Link to="/ingredients">Create Ingredient</Link></div>
+        </div>
+      </div>
+    )
   }
+
 }
 
 // Make the state (or part of it) accessible to this component as props (this.props.XXX)

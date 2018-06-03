@@ -11,15 +11,18 @@
     }
   },
   "dependencies": {
+    "@blueprintjs/core": "^2.3.1",
     "axios": "^0.18.0",
-    "materialize-css": "^0.100.2",
+    "font-awesome": "^4.7.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-fontawesome": "^1.6.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.1.4",
     "react-select": "^2.0.0-beta.6",
+    "react-transition-group": "^2.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
   },

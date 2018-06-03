@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import * as actions from '../../../actions';
-import Select from 'react-select';
-import MenuItem from '@material-ui/core/MenuItem';
-import './Cocktails.css';
+// import Select from 'react-select';
 import axios from 'axios';
 // import { Redirect, Route, withRouter } from 'react-router-dom';
 
-import Ingredient from './Ingredient';
+import './Cocktails.css';
+import FontAwesome from 'react-fontawesome';
+
+// ===== COMPONENT IMPORTS ===== //
+import AddIngredient from './AddIngredient';
+import AddQuantityType from './AddQuantityType';
+import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral'
+
+
 
 class Cocktails extends Component {
 
@@ -20,19 +26,49 @@ class Cocktails extends Component {
       ingredientAlcoholPercentage: 0,
       ingredientType: '',    // spirit, juice, food, other
       allIngredients: [],
+      ingredientsSelected: [{
+        ingredientObjId: '',
+        ingredientName: '',
+        containsAlcohol: false,
+        quantityType: '',
+        quantity: 0
+      }],
       cocktailName: '',
-      cocktailIsAlcoholic: true,
+      cocktailDescription: '',
       cocktailHowTo: '',
+      cocktailStrength: '',
+      cocktailTime: '',
       cocktailIngredients: [],
-      quantityTypes: [{value: 'ml', label: 'ml'},{value: 'oz', label: 'oz'},{value: 'pieces', label: 'pieces'}],
-    }
+      quantityTypes: [
+        {value: 'ml', label: 'ml'},
+        {value: 'oz', label: 'oz'},
+        {value: 'part', label: 'part(s)'},
+        {value: 'barspoon', label: 'barspoon(s)'},
+        {value: 'dash', label: 'dash(es)'},
+        {value: 'piece', label: 'piece(s)'}],
+      strength: [
+        {value: 'light', label: 'Light'},
+        {value: 'medium', label: 'Medium'},
+        {value: 'strong', label: 'Strong'}],
+      time: [
+        {value: 'anytime', label: 'Anytime'},
+        {value: 'morning', label: 'Morning'},
+        {value: 'afternoon', label: 'Afternoon'},
+        {value: 'night', label: 'Night'}],
+      }
+    
 
     // Binding "this" to the function handler so we can use the main components "this" inside
     // and have access to things like this.state, this.setState({})
-    this.handleIngredientSubmit = this.handleIngredientSubmit.bind(this);
     this.handleCocktailSubmit = this.handleCocktailSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+    this.handleIngredientChange = this.handleIngredientChange.bind(this);
     this.handleQuantityTypeChange = this.handleQuantityTypeChange.bind(this);
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
+
+    this.addIngedient = this.addIngedient.bind(this);
+    this.removeIngredient = this.removeIngredient.bind(this);
   }
 
   async componentDidMount() {
@@ -46,90 +82,195 @@ class Cocktails extends Component {
     this.setState({
       allIngredients: res.data.theIngredients
     })
-
   }
 
-  
   handleChange (event) {
     // I get the event.target.name (coming from input name)
     // and use it to target the key on `state` object with the same name, using bracket syntax
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleIngredientChange = (cocktailIngredients) => {
-    this.setState({ cocktailIngredients });
+  handleIngredientChange = (ingredient, index) => {
+    let ingredientsSelected = this.state.ingredientsSelected;
+    ingredientsSelected[index].ingredientObjId = ingredient._id;
+    ingredientsSelected[index].ingredientName = ingredient.name;
+    if (ingredient.alcoholPercentage > 0) {
+      ingredientsSelected[index].containsAlcohol = true;
+    }
+
+    this.setState({ ingredientsSelected: ingredientsSelected });
   }
 
-  handleQuantityTypeChange = (quantityType) => {
-    console.log('quantityType: ', quantityType);
+  handleQuantityTypeChange = (quantityType, index) => {
+    let ingredientsSelected = this.state.ingredientsSelected;
+    ingredientsSelected[index].quantityType = quantityType.value;
+    ingredientsSelected[index].quantity = 0;
+    this.setState({ ingredientsSelected: ingredientsSelected });
   }
 
-  handleIngredientSubmit(event) {
-    console.log('state: ', this.state);
+  handleQuantityChange = (event, index) => {
+    let ingredientsSelected = this.state.ingredientsSelected;
+    ingredientsSelected[index].quantity = event.target.value;
 
-    axios.post('/api/ingredients/create', { ingredient: this.state })
-    .then(result => {
-      console.log('result: ', result);
-    })
-    .catch(error => {
-      console.log('error: ', error);
-    })
+    this.setState({ ingredientsSelected: ingredientsSelected });
+  }
 
-    event.preventDefault();
+  handleStrengthChange = (event, index) => {
+    this.setState({ cocktailStrength: event.value });
+  }
+
+  handleTimeChange = (event, index) => {
+    this.setState({ cocktailTime: event.value });
   }
 
   handleCocktailSubmit(event) {
     console.log('state: ', this.state);
+    let cocktail = {
+      name: this.state.cocktailName,
+      description: this.state.cocktailDescription,
+      isAlcoholic: false,
+      howTo: this.state.cocktailHowTo,
+      strength: this.state.cocktailStrength,
+      time: this.state.cocktailTime,
+      ingredients: this.state.ingredientsSelected
+    }
 
-    /*axios.post('/api/cocktails/create', { cocktail: this.state })
+    if (cocktail.ingredients.some(ingredient => ingredient.containsAlcohol)) {
+      cocktail.isAlcoholic = true;
+    }
+
+    let highestContentAmount = 0;
+    let highestContentSpirit = '';
+
+    cocktail.ingredients.map(ingredient => {
+      if (ingredient.containsAlcohol) {
+        if (ingredient.quantityType === 'oz') { ingredient.quantity *= 30 }
+        if (ingredient.quantity > highestContentAmount) {
+          highestContentAmount = ingredient.quantity;
+          highestContentSpirit = ingredient.ingredientName;
+        }
+      }
+    });
+    
+    cocktail.baseSpirit = highestContentSpirit;
+
+    axios.post('/api/cocktails/create', { cocktail: cocktail })
     .then(result => {
       console.log('result: ', result);
     })
     .catch(error => {
       console.log('error: ', error);
-    })*/
-
+    })
     event.preventDefault();
   }
-  removeIngredient(i){
-    let currentIngredients = this.state.cocktailIngredients;
-    currentIngredients.splice(i, 1);
-    this.setState({cocktailIngredients: currentIngredients})
+
+  removeIngredient(index) {
+
+    let ingredientsSelected = this.state.ingredientsSelected;
+    ingredientsSelected.pop();
+
+    this.setState({ ingredientsSelected: ingredientsSelected });
+  }
+
+  addIngedient() {
+    let ingredientsSelected = this.state.ingredientsSelected;
+    let newIngredient = {
+      ingredientObjId: '',
+      ingredientName: '',
+      containsAlcohol: false,
+      quantityType: '',
+      quantity: 0
+    }
+    ingredientsSelected.push(newIngredient);
+
+    this.setState({ ingredientsSelected: ingredientsSelected });
+  }
+
+  log() {
+    console.log('this.state: ', this.state);
   }
 
   render() {
     return (
-      <div>
-        <h3>CREATE COCKTAIL</h3>
-        <form onSubmit={this.handleCocktailSubmit}>
-          <label>Cocktail Name</label>
-          <input type="text" name="cocktailName" placeholder="ex. Margarita" onChange={this.handleChange} />
+      <div className="cocktail-main">
+        <h1 className="cocktail__title">Create Cocktail</h1>
+
+        <form className="cocktail__form" onSubmit={this.handleCocktailSubmit}>
           
-          <h5> ADD INGREDIENTS</h5>
-          <Ingredient ingredients=
-          {this.state.allIngredients}
-          quantityTypes={this.state.quantityTypes}
-          />
+          <div className="cocktail__inputFieldText">
+            <label className="cocktail__label">Cocktail Name:</label>
+            <input className="cocktail__input" type="text" name="cocktailName" placeholder="ex: Margarita" onChange={this.handleChange} />
+          </div>
 
-          <label>How to make</label>
-          <input type="text" name="cocktailHowTo" placeholder="How to make it..." onChange={this.handleChange} />
+          <div className="cocktail__inputFieldText">
+            <label className="cocktail__label">Description:</label>
+            <textarea className="cocktail__input" type="text" name="cocktailDescription" placeholder="ex: This cocktail is da bomb!" onChange={this.handleChange} />
+          </div>
 
-          <input type="submit" value="Submit" />
+          <div className="cocktail__extra-details">
+            <div className="cocktail__inputFieldText cocktail__inputFieldText--extra">
+              <label className="cocktail__label">Strength:</label>
+              <SelectGeneral 
+                list={this.state.strength}
+                size={'small'}
+                // index={i}
+                handleChange={this.handleStrengthChange} 
+                placeholder = {'Select Value'}
+              />
+            </div>
+            <div className="cocktail__inputFieldText cocktail__inputFieldText--extra">
+              <label className="cocktail__label">Time:</label>
+              <SelectGeneral 
+                list={this.state.time}
+                size={'normal'}
+                // index={i}
+                handleChange={this.handleTimeChange} 
+                placeholder = {'Best time to drink?'}
+              />
+            </div>
+          </div>
+        
+
+          {this.state.ingredientsSelected.map((ingredient, i) =>
+            <div className="cocktail__ingredients-list" key={i}> 
+              <div className="cocktail__inputFieldText">
+                <label className="cocktail__label">Ingredient #{i + 1}:</label>
+
+                <AddIngredient 
+                  ingredients={this.state.allIngredients}
+                  index={i}
+                  handleIngredientChange={this.handleIngredientChange} 
+                />
+
+                <AddQuantityType 
+                  quantityTypes={this.state.quantityTypes}
+                  index={i}
+                  handleQuantityTypeChange={this.handleQuantityTypeChange}
+                />
+                <input className="cocktail__ingredient-quantity" type="number" placeholder="ex: 40 ml" 
+                  value={this.state.ingredientsSelected[i].quantity}
+                  onChange={(e) => {this.handleQuantityChange(e, i)}}
+                />
+                { i === this.state.ingredientsSelected.length -1
+                  ? <div>
+                      {this.state.ingredientsSelected.length > 1 ? <FontAwesome onClick={() => {this.removeIngredient(i)}} className="remove-ingredient" name='trash-o' size="2x" /> : ''}
+                      <FontAwesome onClick={() => {this.addIngedient(i)}} className="add-ingredient" name='plus' size="2x" />
+                    </div>
+                  : ''
+                }
+            </div>
+          </div>
+          )}
+
+          <div className="cocktail__inputFieldText">
+            <label className="cocktail__label">How to make:</label>
+            <textarea className="cocktail__input cocktail__input--big" type="text" name="cocktailHowTo" placeholder="ex: Add all ingredients in a glass and start drinking!" onChange={this.handleChange} />
+          </div>
+
+          <input className="cocktail__create" type="submit" value="Submit" />
         </form>
 
-        <h3>ADD NEW INGREDIENTS</h3>
-        <form onSubmit={this.handleIngredientSubmit}>
-          <label>Ingredient Name</label>
-          <input type="text" name="ingredientName" placeholder="ex. Vodka" onChange={this.handleChange} />
-          
-          <label>Ingredient Alcohol Percentage</label>
-          <input type="number" name="ingredientAlcoholPercentage" placeholder="0-100 without the %" onChange={this.handleChange} />
-
-          <label>Ingredient Type</label>
-          <input type="text" name="ingredientType" placeholder="spirit / mixer / juice / other" onChange={this.handleChange} />
-          
-          <input type="submit" value="Submit" />
-        </form>
+          <button onClick={() => {this.log()}}>LOG</button>
       </div>
     );
   }
@@ -144,3 +285,18 @@ function mapStateToProps(state) {
 
 // Connect the component Dashboard so it can access the state
 export default connect(mapStateToProps, actions)(Cocktails);
+
+
+/*
+
+          <label className="cocktail__label">Add Ingredients</label>
+          <AddIngredient ingredients=
+          {this.state.allIngredients}
+          quantityTypes={this.state.quantityTypes}
+          />
+
+          <label className="cocktail__label">How to make</label>
+          <input type="text" name="cocktailHowTo" placeholder="How to make it..." onChange={this.handleChange} />
+
+
+*/

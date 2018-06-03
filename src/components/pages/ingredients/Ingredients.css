@@ -1,4 +1,4 @@
-.cocktail-main {
+.ingredients-main {
   /*height: 80vh;*/
   width: 80vw;
   background-color: sandybrown;
@@ -10,7 +10,7 @@
   color: oldlace;
 }
 
-.cocktail__form {
+.ingredients__form {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -20,7 +20,7 @@
   margin-top:5%;
 }
 
-.cocktail__inputFieldText {
+.ingredients__inputFieldText {
   display: flex;
  /* justify-content: space-around;*/
   align-items: center;
@@ -30,14 +30,14 @@
 
 
 
-.cocktail__label{
+.ingredients__label{
   /*min-width: 150px;*/
   font-size: 20px;
   color: oldlace;
   margin: 0 30px 0 50px;
 }
 
-.cocktail__input {
+.ingredients__input {
   min-width: 250px;
   font-size: 20px;
   background-color: inherit;
@@ -52,14 +52,14 @@
   font-style: italic;
 }
 
-input.cocktail__input {
+input.ingredients__input {
   min-width: 585px;
   border: 2px saddlebrown dashed !important;
   margin: 0 !important;
   padding-left: 10px !important;
 }
 
-textarea.cocktail__input {
+textarea.ingredients__input {
   min-width: 585px;
   border: 2px saddlebrown dashed !important;
   margin: 0 !important;
@@ -69,11 +69,11 @@ textarea.cocktail__input {
   outline: none;
 }
 
-textarea.cocktail__input--big {
+textarea.ingredients__input--big {
   height: 150px;
 }
 
-.cocktail__create {
+.ingredients__create {
   width: 150px;
   height: 50px;
   color: oldlace;
@@ -84,7 +84,7 @@ textarea.cocktail__input--big {
   margin: 100px;
 }
 
-.cocktail__add-more {
+.ingredients__add-more {
   align-self: flex-start;
 }
 
@@ -98,7 +98,7 @@ textarea.cocktail__input--big {
   margin-left: 15px;
 }
 
-.cocktail__ingredient-quantity {
+.ingredients__ingredient-quantity {
   min-width: 100px;
   max-width: 150px;
   font-size: 20px;
@@ -110,6 +110,6 @@ textarea.cocktail__input--big {
   height: 50px;
 }
 
-.cocktail__extra-details {
+.ingredients__extra-details {
   display: flex;
 }

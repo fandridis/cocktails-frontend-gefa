@@ -10,9 +10,13 @@ import { connect } from 'react-redux';
 // Create an object will all the actions of the app
 import * as actions from '../actions';
 
-import Header from './Header/Header';
-import Landing from './pages/Landing/Landing';
+
+import 'font-awesome/css/font-awesome.css';
+
+//import Header from './header/Header';
+import Landing from './pages/landing/Landing';
 import Cocktails from './pages/cocktails/Cocktails';
+import Ingredients from './pages/ingredients/Ingredients';
 
 
 import './App.css';
@@ -41,13 +45,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="">
-        <div className="background__image"></div>
+      <div className="main-app">
         <BrowserRouter>
           <div>
-            <Header />
             <Route exact path="/" component={Landing} />
             <Route path="/cocktails" component={Cocktails} />
+            <Route path="/ingredients" component={Ingredients} />
           </div>
         </BrowserRouter>
       </div>
@@ -77,9 +80,6 @@ const mapStateToProps = state => {
 // connect 1st arg: mapState to props argument
 // connect 2nd arg: all the action creators
 export default connect(mapStateToProps, actions)(App);
-
-
-// The first div has class of container for materializeCSS to work well
 
 // At Route Landing we use 'exact' so it only shows when the route is exactly /
 // Otherwise it would show for /dashboard too because / is incuded in /dashboard

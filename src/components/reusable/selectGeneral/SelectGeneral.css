@@ -1,0 +1,49 @@
+/*
+
+.select-general-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+
+.quantity-wrapper .react-select-container {
+  min-width: 140px;
+  color: saddlebrown !important;
+}
+
+.react-select__control {
+  height: 50px;
+  background-color: transparent !important;
+  border: 2px saddlebrown dashed !important;
+}
+
+.react-select__control__is-focused {
+  background-color: red !important;
+}
+
+.react-select__single-value {
+  color: oldlace !important;
+  font-size: 20px;
+}
+
+.react-select__dropdown-indicator {
+  coloR: oldlace !important;
+  font-size: 20px;
+}
+
+.react-select__input {
+  color: saddlebrown !important;
+}
+
+.react-select__input input {
+  border: none !important;
+  font-size: 20px !important;
+  padding-left: 30px;
+}
+
+.react-select__menu {
+  background-color: rgba(255, 200, 129, 0.8) !important;
+}
+
+*/

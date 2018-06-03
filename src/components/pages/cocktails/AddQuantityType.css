@@ -1,0 +1,10 @@
+.quantity-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.quantity-wrapper .react-select-container {
+  min-width: 170px;
+  color: saddlebrown !important;
+}

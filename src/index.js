@@ -1,6 +1,3 @@
-// Importing the css file, which is not js file so I need to include the file extension
-import 'materialize-css/dist/css/materialize.min.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
