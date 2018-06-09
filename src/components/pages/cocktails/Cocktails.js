@@ -55,6 +55,7 @@ class Cocktails extends Component {
         {value: 'morning', label: 'Morning'},
         {value: 'afternoon', label: 'Afternoon'},
         {value: 'night', label: 'Night'}],
+      selectedFile: null,
       }
     
 
@@ -62,6 +63,7 @@ class Cocktails extends Component {
     // and have access to things like this.state, this.setState({})
     this.handleCocktailSubmit = this.handleCocktailSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
 
     this.handleIngredientChange = this.handleIngredientChange.bind(this);
     this.handleQuantityTypeChange = this.handleQuantityTypeChange.bind(this);
@@ -73,7 +75,8 @@ class Cocktails extends Component {
 
   async componentDidMount() {
     console.log('componentDidMount @ Dashboard.js with props: ', this.props);
-    let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getAll') 
+    let res = await axios.get('/api/ingredients/getAll');
+   // let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getAll');
     console.log('res.data: ', res.data);
     res.data.theIngredients.forEach(ingredient => {
       ingredient.value = ingredient.name;
@@ -123,7 +126,40 @@ class Cocktails extends Component {
     this.setState({ cocktailTime: event.value });
   }
 
+  fileSelectedHandler(event) {
+    console.log('event.target.files[0]: ', event.target.files[0]);
+    this.setState({ selectedFile: event.target.files[0] });
+    
+    const file = event.target.files[0];
+    let formData = new FormData();
+    
+    //Make a request to server and send formData
+    
+  }
+
   handleCocktailSubmit(event) {
+    event.preventDefault()
+
+    let file = new FormData();
+
+    console.log('Appending the file: ', this.state.selectedFile);
+    console.log('With name: ', this.state.selectedFile.name);
+    
+    file.append('file', this.state.selectedFile);
+
+    let config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }
+    
+    axios.post('/api/cocktails/uploadimage', file, config)
+    .then(response => {
+      console.log('response @handleChangeFile: ', response);
+    })
+    .catch(err => {
+      console.log('error @ handleChangeFile: ', err);
+    })
+    
+    /*
     console.log('state: ', this.state);
     let cocktail = {
       name: this.state.cocktailName,
@@ -161,7 +197,7 @@ class Cocktails extends Component {
     .catch(error => {
       console.log('error: ', error);
     })
-    event.preventDefault();
+    event.preventDefault();*/
   }
 
   removeIngredient(index) {
@@ -266,6 +302,8 @@ class Cocktails extends Component {
             <label className="cocktail__label">How to make:</label>
             <textarea className="cocktail__input cocktail__input--big" type="text" name="cocktailHowTo" placeholder="ex: Add all ingredients in a glass and start drinking!" onChange={this.handleChange} />
           </div>
+
+          <input name="file" type="file" onChange={this.fileSelectedHandler} />
 
           <input className="cocktail__create" type="submit" value="Submit" />
         </form>

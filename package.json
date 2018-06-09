@@ -7,7 +7,7 @@
       "target": "http://localhost:8001"
     },
     "/api/*": {
-      "target": "https://cocktails-api-gefa.herokuapp.com"
+      "target": "http://localhost:8001"
     }
   },
   "dependencies": {
