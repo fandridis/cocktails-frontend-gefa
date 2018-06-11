@@ -7,7 +7,7 @@ import axios from 'axios';
 // import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import './Ingredients.css';
-import FontAwesome from 'react-fontawesome';
+// import FontAwesome from 'react-fontawesome';
 
 // ===== COMPONENT IMPORTS ===== //
 import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral'

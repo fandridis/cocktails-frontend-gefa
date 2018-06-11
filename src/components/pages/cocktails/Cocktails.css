@@ -80,6 +80,7 @@ textarea.cocktail__input--big {
   font-size: 20px;
   background-color: saddlebrown;
   border: none;
+  align-self: flex-end;
 
   margin: 100px;
 }
@@ -112,4 +113,8 @@ textarea.cocktail__input--big {
 
 .cocktail__extra-details {
   display: flex;
+}
+
+.pt-file-input {
+  width: 300px;
 }

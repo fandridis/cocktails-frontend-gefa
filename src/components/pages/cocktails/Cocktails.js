@@ -10,11 +10,28 @@ import './Cocktails.css';
 import FontAwesome from 'react-fontawesome';
 
 // ===== COMPONENT IMPORTS ===== //
-import AddIngredient from './AddIngredient';
-import AddQuantityType from './AddQuantityType';
-import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral'
+import AddIngredient from './AddIngredient/AddIngredient';
+import AddQuantityType from './AddQuantityType/AddQuantityType';
+import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral';
 
+import {ApiAiClient} from "api-ai-javascript";
 
+const client = new ApiAiClient({accessToken: '622c99fbec55421ba644273a7c7b82cd'})
+
+client
+.textRequest('shoes')
+    .then((response) => { 
+      console.log('response: ', response );
+
+      client
+        .textRequest('yes')
+            .then((response) => { 
+              console.log('response: ', response )
+            })
+            .catch((error) => {/* do something here too */})
+            
+    })
+    .catch((error) => {/* do something here too */})
 
 class Cocktails extends Component {
 
@@ -129,12 +146,6 @@ class Cocktails extends Component {
   fileSelectedHandler(event) {
     console.log('event.target.files[0]: ', event.target.files[0]);
     this.setState({ selectedFile: event.target.files[0] });
-    
-    const file = event.target.files[0];
-    let formData = new FormData();
-    
-    //Make a request to server and send formData
-    
   }
 
   handleCocktailSubmit(event) {
@@ -150,7 +161,7 @@ class Cocktails extends Component {
     let config = {
       headers: { 'Content-Type': 'multipart/form-data' }
     }
-    
+
     axios.post('/api/cocktails/uploadimage', file, config)
     .then(response => {
       console.log('response @handleChangeFile: ', response);
@@ -303,7 +314,15 @@ class Cocktails extends Component {
             <textarea className="cocktail__input cocktail__input--big" type="text" name="cocktailHowTo" placeholder="ex: Add all ingredients in a glass and start drinking!" onChange={this.handleChange} />
           </div>
 
-          <input name="file" type="file" onChange={this.fileSelectedHandler} />
+          <div className="cocktail__inputFieldText">
+            <label className="cocktail__label">Add an image</label>
+            <label className="pt-file-input pt-large .modifier">
+              <input name="file" type="file" onChange={this.fileSelectedHandler} />
+              <span className="pt-file-upload-input">{this.state.selectedFile ? this.state.selectedFile.name : 'Choose a file'}</span>
+          </label>
+          </div>
+
+
 
           <input className="cocktail__create" type="submit" value="Submit" />
         </form>
