@@ -77,7 +77,6 @@ class Cocktails extends Component {
     
 
     // Binding "this" to the function handler so we can use the main components "this" inside
-    // and have access to things like this.state, this.setState({})
     this.handleCocktailSubmit = this.handleCocktailSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
@@ -151,27 +150,8 @@ class Cocktails extends Component {
   handleCocktailSubmit(event) {
     event.preventDefault()
 
-    let file = new FormData();
-
-    console.log('Appending the file: ', this.state.selectedFile);
-    console.log('With name: ', this.state.selectedFile.name);
-    
-    file.append('file', this.state.selectedFile);
-
-    let config = {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    }
-
-    axios.post('/api/cocktails/uploadimage', file, config)
-    .then(response => {
-      console.log('response @handleChangeFile: ', response);
-    })
-    .catch(err => {
-      console.log('error @ handleChangeFile: ', err);
-    })
-    
-    /*
     console.log('state: ', this.state);
+    // Prepare the cocktail object to be passed in the backend
     let cocktail = {
       name: this.state.cocktailName,
       description: this.state.cocktailDescription,
@@ -182,33 +162,59 @@ class Cocktails extends Component {
       ingredients: this.state.ingredientsSelected
     }
 
+    // Calculate if the cocktail contains alcohol
     if (cocktail.ingredients.some(ingredient => ingredient.containsAlcohol)) {
       cocktail.isAlcoholic = true;
     }
 
+    // Calculate the main spirit of the cocktail by finding the spirit with the highest amount
     let highestContentAmount = 0;
     let highestContentSpirit = '';
-
     cocktail.ingredients.map(ingredient => {
       if (ingredient.containsAlcohol) {
-        if (ingredient.quantityType === 'oz') { ingredient.quantity *= 30 }
-        if (ingredient.quantity > highestContentAmount) {
-          highestContentAmount = ingredient.quantity;
+        let quantityInMl = ingredient.quantity;
+        if (ingredient.quantityType === 'oz') { quantityInMl *= 30 }
+        if (quantityInMl > highestContentAmount) {
+          highestContentAmount = quantityInMl;
           highestContentSpirit = ingredient.ingredientName;
         }
       }
     });
-    
     cocktail.baseSpirit = highestContentSpirit;
 
-    axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/create', { cocktail: cocktail })
-    .then(result => {
-      console.log('result: ', result);
+    // Save the cocktail in the DB
+ //   axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/create', { cocktail: cocktail })
+    axios.post('/api/cocktails/create', { cocktail: cocktail })
+    .then(response => {
+      console.log('response: ', response);
+
+      // If there's an image, upload it to Azure Container and link it to the cocktail document
+      if (this.state.selectedFile) {
+        let file = new FormData();
+        console.log('Appending the file: ', this.state.selectedFile);
+        console.log('With name: ', this.state.selectedFile.name);
+        
+        file.append('file', this.state.selectedFile);
+        file.append('cocktailName', this.state.cocktailName);
+        file.append('cocktailId', response.data.theCocktail._id);
+  
+        let config = {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+  
+        axios.post('/api/cocktails/uploadimage', file, config)
+        .then(response => {
+          console.log('response @handleChangeFile: ', response);
+        })
+        .catch(err => {
+          console.log('error @ handleChangeFile: ', err);
+        })
+      }
+
     })
     .catch(error => {
       console.log('error: ', error);
     })
-    event.preventDefault();*/
   }
 
   removeIngredient(index) {
