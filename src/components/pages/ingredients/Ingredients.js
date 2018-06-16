@@ -138,18 +138,3 @@ function mapStateToProps(state) {
 
 // Connect the component Dashboard so it can access the state
 export default connect(mapStateToProps, actions)(Ingredients);
-
-
-/*
-
-          <label className="cocktail__label">Add Ingredients</label>
-          <AddIngredient ingredients=
-          {this.state.allIngredients}
-          quantityTypes={this.state.quantityTypes}
-          />
-
-          <label className="cocktail__label">How to make</label>
-          <input type="text" name="cocktailHowTo" placeholder="How to make it..." onChange={this.handleChange} />
-
-
-*/

@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin/node /Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin/yarn start
+  /Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin/node /Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin/yarn build
 
 PATH: 
-  /Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin:/Users/georgiosfandridis/anaconda3/bin:/Users/georgiosfandridis/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /Users/georgiosfandridis/Downloads/google-cloud-sdk/bin:/Users/georgiosfandridis/.nvm/versions/node/v8.9.1/bin:/Users/georgiosfandridis/anaconda3/bin:/Users/georgiosfandridis/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
   1.5.1
@@ -28,7 +28,7 @@ npm manifest:
     },
     "dependencies": {
       "@blueprintjs/core": "^2.3.1",
-      "api-ai-javascript": "^2.0.0-beta.14",
+      "api-ai-javascript": "^2.0.0-beta.21",
       "axios": "^0.18.0",
       "font-awesome": "^4.7.0",
       "react": "^16.3.2",
@@ -91,14 +91,6 @@ Lockfile:
     version "2.2.1"
     resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-2.2.1.tgz#1b4275fc67467218a8ffec6403c87c7af24532a5"
     dependencies:
-      classnames "^2.2"
-      tslib "^1.9.0"
-  
-  "@blueprintjs/select@^2.0.1":
-    version "2.0.1"
-    resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-2.0.1.tgz#4746aff7ed534113b17d0663bf548b2867dc4b2a"
-    dependencies:
-      "@blueprintjs/core" "^2.3.1"
       classnames "^2.2"
       tslib "^1.9.0"
   
@@ -262,6 +254,10 @@ Lockfile:
     dependencies:
       micromatch "^3.1.4"
       normalize-path "^2.1.1"
+  
+  api-ai-javascript@^2.0.0-beta.21:
+    version "2.0.0-beta.21"
+    resolved "https://registry.yarnpkg.com/api-ai-javascript/-/api-ai-javascript-2.0.0-beta.21.tgz#43465f6835dc4f0e14e0311c0bb64017f3148b5b"
   
   append-transform@^0.4.0:
     version "0.4.0"
@@ -7565,9 +7561,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 127
+  Exit code: 1
   Command: sh
-  Arguments: -c react-scripts start
+  Arguments: -c react-scripts build
   Directory: /Users/georgiosfandridis/Dropbox/Clients/cocktails-app/cocktails-frontend
   Output:
   

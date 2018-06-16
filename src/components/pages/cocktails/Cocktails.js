@@ -14,24 +14,24 @@ import AddIngredient from './AddIngredient/AddIngredient';
 import AddQuantityType from './AddQuantityType/AddQuantityType';
 import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral';
 
-import {ApiAiClient} from "api-ai-javascript";
+// import {ApiAiClient} from "api-ai-javascript";
 
-const client = new ApiAiClient({accessToken: '622c99fbec55421ba644273a7c7b82cd'})
+// const client = new ApiAiClient({accessToken: '622c99fbec55421ba644273a7c7b82cd'})
 
-client
-.textRequest('shoes')
-    .then((response) => { 
-      console.log('response: ', response );
+// client
+// .textRequest('shoes')
+//     .then((response) => { 
+//       console.log('response: ', response );
 
-      client
-        .textRequest('yes')
-            .then((response) => { 
-              console.log('response: ', response )
-            })
-            .catch((error) => {/* do something here too */})
+//       client
+//         .textRequest('yes')
+//             .then((response) => { 
+//               console.log('response: ', response )
+//             })
+//             .catch((error) => {/* do something here too */})
             
-    })
-    .catch((error) => {/* do something here too */})
+//     })
+//     .catch((error) => {/* do something here too */})
 
 class Cocktails extends Component {
 
@@ -183,8 +183,8 @@ class Cocktails extends Component {
     cocktail.baseSpirit = highestContentSpirit;
 
     // Save the cocktail in the DB
- //   axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/create', { cocktail: cocktail })
-    axios.post('/api/cocktails/create', { cocktail: cocktail })
+    axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/create', { cocktail: cocktail })
+ //   axios.post('/api/cocktails/create', { cocktail: cocktail })
     .then(response => {
       console.log('response: ', response);
 
@@ -348,18 +348,3 @@ function mapStateToProps(state) {
 
 // Connect the component Dashboard so it can access the state
 export default connect(mapStateToProps, actions)(Cocktails);
-
-
-/*
-
-          <label className="cocktail__label">Add Ingredients</label>
-          <AddIngredient ingredients=
-          {this.state.allIngredients}
-          quantityTypes={this.state.quantityTypes}
-          />
-
-          <label className="cocktail__label">How to make</label>
-          <input type="text" name="cocktailHowTo" placeholder="How to make it..." onChange={this.handleChange} />
-
-
-*/
