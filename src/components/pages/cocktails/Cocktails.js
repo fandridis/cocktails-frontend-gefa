@@ -91,8 +91,8 @@ class Cocktails extends Component {
 
   async componentDidMount() {
     console.log('componentDidMount @ Dashboard.js with props: ', this.props);
-    let res = await axios.get('/api/ingredients/getAll');
-   // let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getAll');
+  //  let res = await axios.get('/api/ingredients/getall');
+    let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/ingredients/getall');
     console.log('res.data: ', res.data);
     res.data.theIngredients.forEach(ingredient => {
       ingredient.value = ingredient.name;
@@ -179,6 +179,7 @@ class Cocktails extends Component {
           highestContentSpirit = ingredient.ingredientName;
         }
       }
+      return 'ok';
     });
     cocktail.baseSpirit = highestContentSpirit;
 
@@ -202,7 +203,8 @@ class Cocktails extends Component {
           headers: { 'Content-Type': 'multipart/form-data' }
         }
   
-        axios.post('/api/cocktails/uploadimage', file, config)
+        axios.post('https://cocktails-api-gefa.herokuapp.com/api/cocktails/uploadimage', file, config)
+       // axios.post('/api/cocktails/uploadimage', file, config)
         .then(response => {
           console.log('response @handleChangeFile: ', response);
         })
