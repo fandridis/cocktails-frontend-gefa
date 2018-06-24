@@ -17,6 +17,7 @@ import 'font-awesome/css/font-awesome.css';
 import Landing from './pages/landing/Landing';
 import Cocktails from './pages/cocktails/Cocktails';
 import Ingredients from './pages/ingredients/Ingredients';
+import CocktailSearch from './pages/cocktailSearch/CocktailSearch';
 
 
 import './App.css';
@@ -51,6 +52,7 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route path="/cocktails" component={Cocktails} />
             <Route path="/ingredients" component={Ingredients} />
+            <Route path="/cocktailsearch" component={CocktailSearch} />
           </div>
         </BrowserRouter>
       </div>

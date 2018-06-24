@@ -1,0 +1,11 @@
+.cocktailCard-wrapper {
+  width: 250px;
+  height: 300px;
+  margin: 60px;
+  background-color: green;
+}
+
+.cocktailCard-image {
+  width: 250px;
+  height: 300px;
+}

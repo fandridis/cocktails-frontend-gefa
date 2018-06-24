@@ -30,6 +30,7 @@ class Landing extends Component {
         <div className="landing__routes">
         <div className="landing__route"><Link to="/cocktails">Create Cocktail</Link></div>
         <div className="landing__route"><Link to="/ingredients">Create Ingredient</Link></div>
+        <div className="landing__route"><Link to="/cocktailSearch">Search Cocktails</Link></div>
         </div>
       </div>
     )

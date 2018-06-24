@@ -4,12 +4,11 @@ import './SelectGeneral.css';
 
 const SelectGeneral = (props) => {
 
-  // Use the function/action passed from parent to get the tournaments
-
   const list = props.list || [];
   const index = props.index || -1;
   const placeholder = props.placeholder || 'Select Value';
   const size = props.size || 'normal';
+  const allowMultiple = props.allowMultiple || false;
   
  // const quantityTypes = props.quantityTypes || [];
 
@@ -23,6 +22,20 @@ const SelectGeneral = (props) => {
   }
   
   return (
+    allowMultiple 
+    ?
+    <div className="select-general-wrapper">
+      <Select
+        className='react-select-container'
+        classNamePrefix="react-select"
+        options={list}
+        isMulti
+        onChange={(e) => {props.handleChange(e, index)}}
+        placeholder={placeholder}
+        styles={customStyles}
+      />
+    </div>
+    :
     <div className="select-general-wrapper">
       <Select
         className='react-select-container'

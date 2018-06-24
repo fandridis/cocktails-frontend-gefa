@@ -1,7 +1,7 @@
 .main-app {
   width: 100vw;
   min-height: 100vh;
-  background-color: saddlebrown;
+  background-color: rgb(191, 245, 43);
 
   display: flex;
   justify-content: center;

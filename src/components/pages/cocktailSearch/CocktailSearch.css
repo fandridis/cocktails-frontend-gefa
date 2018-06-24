@@ -1,0 +1,18 @@
+.cocktailSearch-pageWrapper {
+  width: 90vw;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: palevioletred;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  color: oldlace;
+}
+
+.cocktailSearch_searchBar {
+  width: 400px;
+  margin-top: 200px;
+  margin-bottom: 20px;
+}
