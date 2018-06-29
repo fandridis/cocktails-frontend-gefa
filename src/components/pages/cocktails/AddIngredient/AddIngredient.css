@@ -1,4 +1,4 @@
-.ingredient-wrapper {
+/* .ingredient-wrapper {
   display: flex;
   justify-content: space-between;
   margin-right: 10px;
@@ -42,15 +42,9 @@
 }
 
 .react-select__placeholder {
-  opacity: 0.7 !important; /* Firefox */
+  opacity: 0.7 !important; 
   font-size: 20px !important;
   color: oldlace !important;
   font-style: italic !important;
 }
-
-/*
-.react-select__control input{
-  position: absolute;
-  top: -5px
-}
-*/
+ */

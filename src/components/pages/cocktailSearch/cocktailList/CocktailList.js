@@ -5,16 +5,19 @@ import CocktailCard from '../cocktailCard/CocktailCard';
 
 const CocktailList = (props) => {
   
-    return (
-        <div className="cocktailList-wrapper">
+  return (
+      <div className="cocktailList-wrapper">
           {props.cocktails.map(cocktail =>
             <CocktailCard
               key={cocktail.name}
-              url={cocktail.imageLink}
+              name={cocktail.name}
+              img={cocktail.imageLink}
+              strength={cocktail.strength}
+              shortDescription={cocktail.shortDescription}
             />
           )}
-        </div>
-    );
+     </div>
+  );
   
 };
 

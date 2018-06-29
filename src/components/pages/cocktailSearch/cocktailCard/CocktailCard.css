@@ -1,11 +1,77 @@
+/* 
+font-family: 'Playfair Display', serif;
+font-family: 'Encode Sans Condensed', sans-serif;
+*/
+:root {
+  --gradient--red: linear-gradient(#CE4D4D, #F3D334);
+  --gradient--orange: linear-gradient(#FCF427, #FF9100);
+
+}
 .cocktailCard-wrapper {
-  width: 250px;
-  height: 300px;
-  margin: 60px;
-  background-color: green;
+  width: 280px;
+  height: 375px;
+  margin: 40px;
+  background: var(--gradient--red);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px #ccc;
+  overflow: hidden;
+}
+.CocktailCard__header {
+  width: 100%;
+  display: flex;
+}
+.label__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.Cocktail__label {
+  position: relative;
+  left: 60px;
+  top: 75px;
+  text-transform: capitalize;
+  font-family: 'Encode Sans Condensed', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  background: var(--gradient--orange);
+  padding: 10px 15px;
+  border-radius: 15px;
+  box-shadow: 0px 3px 6px #F6910E;
+}
+.cocktailCard__image {
+  width: auto;
+  height: 195px;
+  margin-top: 50px;
+}
+.CocktailCard__name {
+  font-family: 'Playfair Display', serif;
+  color: #382C5F;
+  font-size: 24px;
+  margin: 0px;
+}
+.CocktailCard__details {
+  font-family: 'Encode Sans Condensed', sans-serif;
+  font-size: 14px;
+  color: hsla(255, 24%, 50%, 0.5);
+  
+}
+.CocktailCard__footer {
+  background: white;
+  width: 100%;
+  margin-top: 25px;
+  padding: 0px 25px 25px;
+  box-shadow: -120px -40px 60px white, 120px -40px 60px white;
+}
+.CocktailCard__ImgBackground {
+  width: 100%;
+  height: 286px;
+  display: flex;
+  justify-content: center;
 }
 
-.cocktailCard-image {
-  width: 250px;
-  height: 300px;
-}
+
