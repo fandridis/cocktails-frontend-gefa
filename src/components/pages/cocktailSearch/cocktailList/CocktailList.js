@@ -10,7 +10,9 @@ return (
       <div className="cocktailList-wrapper">
           {props.cocktails.map(cocktail =>
 
-            <Link to={{
+            <Link
+             key={cocktail.name}
+             to={{
               pathname: `/cocktailDetails/${cocktail.name}`,
               state: { 
                 test: 'This is a test',
@@ -18,7 +20,6 @@ return (
               }
             }}>
             <CocktailCard
-              key={cocktail.name}
               name={cocktail.name}
               img={cocktail.imageLink}
               strength={cocktail.strength}
