@@ -1,0 +1,22 @@
+.cocktailSearch-pageWrapper {
+  width: 95vw;
+  height: 92vh;
+  overflow-y: scroll;
+
+  /* background-color: palevioletred; */
+  background-color: rgba(255,255,255,.6);
+  backdrop-filter: blur(50px);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  color: oldlace;
+}
+
+.cocktailSearch_searchBar {
+  width: 400px;
+  margin-top: 200px;
+  margin-bottom: 20px;
+}

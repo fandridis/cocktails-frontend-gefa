@@ -18,6 +18,7 @@ import Landing from './pages/landing/Landing';
 import Cocktails from './pages/cocktails/Cocktails';
 import Ingredients from './pages/ingredients/Ingredients';
 import CocktailSearch from './pages/cocktailSearch/CocktailSearch';
+import CocktailDetails from './pages/cocktailSearch/cocktailDetails/CocktailDetails';
 
 
 import './App.css';
@@ -53,6 +54,7 @@ class App extends Component {
             <Route path="/cocktails" component={Cocktails} />
             <Route path="/ingredients" component={Ingredients} />
             <Route path="/cocktailsearch" component={CocktailSearch} />
+            <Route path="/cocktaildetails" component={CocktailDetails} />
           </div>
         </BrowserRouter>
       </div>
