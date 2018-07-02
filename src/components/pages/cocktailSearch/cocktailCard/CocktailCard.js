@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './CocktailCard.css';
 
 const CocktailCard = (props) => {
@@ -14,13 +14,11 @@ const CocktailCard = (props) => {
           </div> 
           <div className="CocktailCard__ImgBackground">
 
-          
           <img 
-              src={"https://cocktailsappimages.blob.core.windows.net/testcontainer/" + props.img}
-              alt="cocktail drink"
-              className="cocktailCard__image"
-            />
-
+            src={"https://cocktailsappimages.blob.core.windows.net/testcontainer/" + props.img}
+            alt="cocktail drink"
+            className="cocktailCard__image"
+          />
 
           </div> 
           <div className="CocktailCard__footer">

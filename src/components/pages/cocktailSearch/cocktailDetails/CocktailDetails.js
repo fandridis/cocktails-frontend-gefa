@@ -13,49 +13,48 @@ import './CocktailDetails.css';
 
 
 
-class CocktailSearch extends Component {
+class CocktailDetails extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      spirits: [
-        {value: 'Vodka', label: 'Vodka'},
-        {value: 'Rum', label: 'Rum'},
-        {value: 'Whiskey', label: 'Whiskey'},
-        {value: 'Gin', label: 'Gin'},
-        {value: 'Bourbon', label: 'Bourbon'}
-      ],
-      allCocktails: [],
-      filteredCocktails: [],
-      sideMenu: "-250px"
     }
-
-    // Binding "this" to the function handler so we can use the main components "this" inside
-    // and have access to things like this.state, this.setState({})
-    // this.toggleSideMenu = this.toggleSideMenu.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
 
   async componentDidMount() {
     console.log('this.props @ CocktailDetails.js: ', this.props);
   };
 
-  // handleChange(event) {
-  //  console.log('event: ', event);
-    // Multi-purpose handler
-    // I get the event.target.name (coming from input name)
-    // and use it to target the key on `state` object with the same name, using bracket syntax
-  // this.setState({ [event.target.name]: event.target.value });
-  // }
-
-  handleChange(event) {
-  }
-
   render() {
+    let cocktail = this.props.location.state.cocktail;
+
     return (
       <div className="cocktailSearch-pageWrapper">
-        INDIVIDUAL COCKTAIL
+
+        <img 
+          src={"https://cocktailsappimages.blob.core.windows.net/testcontainer/" + cocktail.imageLink}
+          alt="cocktail drink"
+          className="cocktailCard__image"
+        />
+
+        <h1>Name: {cocktail.name}</h1>
+
+        <h3>Strength: {cocktail.strength}</h3>
+
+        <h3>Time: {cocktail.time}</h3>
+
+        <p>Description: {cocktail.description}</p>
+
+        {cocktail.ingredients.map((ingredient, i) =>
+          <div key={i}>
+            <h3>{ingredient.ingredientName}</h3>
+            <h4>{ingredient.quantity}</h4>
+          </div>
+        )}
+
+        <p>How to make: {cocktail.howTo}</p>
+
       </div>
     )
   }
@@ -70,4 +69,4 @@ class CocktailSearch extends Component {
 
 // Connect the component Dashboard so it can access the state
 // export default connect(mapStateToProps, actions)(Ingredients);
-export default CocktailSearch;
+export default CocktailDetails;
