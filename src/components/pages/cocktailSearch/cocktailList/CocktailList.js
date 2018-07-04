@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './CocktailList.css';
 
-import CocktailCard from '../cocktailCard/CocktailCard';
+import CocktailCard from './cocktailCard/CocktailCard';
 
 const CocktailList = (props) => {
   

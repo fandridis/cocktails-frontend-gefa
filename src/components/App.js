@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 // Create an object will all the actions of the app
 import * as actions from '../actions';
 
-
 import 'font-awesome/css/font-awesome.css';
+import './App.css';
 
 //import Header from './header/Header';
 import Landing from './pages/landing/Landing';
@@ -21,7 +21,8 @@ import CocktailSearch from './pages/cocktailSearch/CocktailSearch';
 import CocktailDetails from './pages/cocktailSearch/cocktailDetails/CocktailDetails';
 
 
-import './App.css';
+// ===== STATE MANAGEMENT WITH REACT 16 CONTEXT API ===== //
+import StateProvider from './wrappers/StateContext';
 
 class App extends Component {
   constructor(props) {
@@ -47,17 +48,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="main-app">
-        <BrowserRouter>
-          <div>
-            <Route exact path="/" component={Landing} />
-            <Route path="/cocktails" component={Cocktails} />
-            <Route path="/ingredients" component={Ingredients} />
-            <Route path="/cocktailsearch" component={CocktailSearch} />
-            <Route path="/cocktaildetails" component={CocktailDetails} />
-          </div>
-        </BrowserRouter>
-      </div>
+        <div className="main-app">
+          <BrowserRouter>
+            <StateProvider>
+              <div>       
+                <Route exact path="/" component={Landing} />
+                <Route path="/cocktails" component={Cocktails} />
+                <Route path="/ingredients" component={Ingredients} />
+                <Route path="/cocktailsearch" component={CocktailSearch} />
+                <Route path="/cocktaildetails" component={CocktailDetails} />
+              </div>
+            </StateProvider>
+          </BrowserRouter>
+        </div>
     );
   }
 }

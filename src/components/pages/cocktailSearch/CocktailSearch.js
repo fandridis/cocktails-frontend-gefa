@@ -15,7 +15,7 @@ import CocktailList from './cocktailList/CocktailList';
 // import BtnToggleSideMenu from "../../reusable/btnToggleSideMenu/btnToggleSideMenu";
 import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral';
 
-
+import { StateContext } from '../../wrappers/StateContext';
 
 class CocktailSearch extends Component {
 
@@ -45,13 +45,28 @@ class CocktailSearch extends Component {
     //this.setState(prevState => ({
     //  sideMenu: this.state.sideMenu === "0" ? "-250px" : "0"
     //}));
-    console.log('componentDidMount @ Dashboard.js with props: ', this.props);
-    let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/cocktails/getAll') 
-    console.log('res.data: ', res.data);
-    this.setState({
-      allCocktails: res.data.theCocktails,
-      filteredCocktails: res.data.theCocktails
-    })
+
+    console.log('componentDidMount @ CocktailSearch.js with props: ', this.props);
+
+    if (this.props.stateContext.cocktails.length > 0) {
+      console.log('ALREADY GOT THE COCKTAILS!');
+      this.setState({
+        allCocktails: this.props.stateContext.cocktails,
+        filteredCocktails: this.props.stateContext.cocktails
+      });
+    }
+    else {
+      console.log('DO NOT HAVE THE COCKTAILS YET!');
+      let res = await axios.get('https://cocktails-api-gefa.herokuapp.com/api/cocktails/getAll') 
+      console.log('res.data: ', res.data);
+      this.setState({
+        allCocktails: res.data.theCocktails,
+        filteredCocktails: res.data.theCocktails
+      });
+      // Update the context state too
+      this.props.stateContext.updateCocktails(res.data.theCocktails);
+    }
+
   }
 
   toggleSideMenu = () => {
@@ -87,6 +102,14 @@ class CocktailSearch extends Component {
     return (
       <div className="cocktailSearch-pageWrapper">
 
+      {/* // ===== This is how we access a value from the context state ===== //
+      <StateContext.Consumer>
+        {localeVal =>
+          localeVal.locale === 'en' ? <h1>Welcome!</h1> : <h1>Bienvenue!</h1>
+        }
+      </StateContext.Consumer>
+      */}
+
         <div className="cocktailSearch_searchBar">
         <SelectGeneral 
           list={this.state.spirits}
@@ -118,4 +141,13 @@ class CocktailSearch extends Component {
 
 // Connect the component Dashboard so it can access the state
 // export default connect(mapStateToProps, actions)(Ingredients);
-export default CocktailSearch;
+
+// export default CocktailSearch;
+
+// ===== Wrapping the component so it can access the context state through its props ===== //
+// Otherwise they would only be available on render()
+export default props => (
+ <StateContext.Consumer>
+   {stateContext => <CocktailSearch {...props} stateContext={stateContext} />}
+ </StateContext.Consumer>
+);
