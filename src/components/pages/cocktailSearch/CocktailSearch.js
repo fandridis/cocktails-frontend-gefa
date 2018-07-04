@@ -15,7 +15,11 @@ import CocktailList from './cocktailList/CocktailList';
 // import BtnToggleSideMenu from "../../reusable/btnToggleSideMenu/btnToggleSideMenu";
 import SelectGeneral from '../../reusable/selectGeneral/SelectGeneral';
 
-import { StateContext } from '../../wrappers/StateContext';
+// import { StateContext } from '../../wrappers/StateContext';
+// Above not needed as I am using the HOC withState below to wrap the component
+// With the HOC, we don't need StateContext.Consumer anymore as we can access
+// the state context from this.props.state
+import { withState } from '../../wrappers/stateHOC';
 
 class CocktailSearch extends Component {
 
@@ -48,11 +52,11 @@ class CocktailSearch extends Component {
 
     console.log('componentDidMount @ CocktailSearch.js with props: ', this.props);
 
-    if (this.props.stateContext.cocktails.length > 0) {
+    if (this.props.state.cocktails.length > 0) {
       console.log('ALREADY GOT THE COCKTAILS!');
       this.setState({
-        allCocktails: this.props.stateContext.cocktails,
-        filteredCocktails: this.props.stateContext.cocktails
+        allCocktails: this.props.state.cocktails,
+        filteredCocktails: this.props.state.cocktails
       });
     }
     else {
@@ -64,7 +68,7 @@ class CocktailSearch extends Component {
         filteredCocktails: res.data.theCocktails
       });
       // Update the context state too
-      this.props.stateContext.updateCocktails(res.data.theCocktails);
+      this.props.state.updateCocktails(res.data.theCocktails);
     }
 
   }
@@ -102,13 +106,7 @@ class CocktailSearch extends Component {
     return (
       <div className="cocktailSearch-pageWrapper">
 
-      {/* // ===== This is how we access a value from the context state ===== //
-      <StateContext.Consumer>
-        {localeVal =>
-          localeVal.locale === 'en' ? <h1>Welcome!</h1> : <h1>Bienvenue!</h1>
-        }
-      </StateContext.Consumer>
-      */}
+        <h1>{this.props.state.test}</h1>
 
         <div className="cocktailSearch_searchBar">
         <SelectGeneral 
@@ -142,12 +140,15 @@ class CocktailSearch extends Component {
 // Connect the component Dashboard so it can access the state
 // export default connect(mapStateToProps, actions)(Ingredients);
 
-// export default CocktailSearch;
-
 // ===== Wrapping the component so it can access the context state through its props ===== //
-// Otherwise they would only be available on render()
-export default props => (
- <StateContext.Consumer>
-   {stateContext => <CocktailSearch {...props} stateContext={stateContext} />}
- </StateContext.Consumer>
-);
+// Otherwise it would only be available on render()
+// export default props => (
+//  <StateContext.Consumer>
+//    {stateContext => <CocktailSearch {...props} stateContext={stateContext} />}
+//  </StateContext.Consumer>
+// );
+
+// Does the same with the above, but now using a HOC component instead
+ export default withState(CocktailSearch);
+
+ //const ThemedButton = withTheme(Button);

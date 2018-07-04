@@ -7,6 +7,7 @@ class StateProvider extends React.Component {
     super(props);
 
     this.state = {
+      test: 'Hello World!',
       cocktails: [],
       updateCocktails: (cocktails) => { this.setState({cocktails: cocktails})} //this.changeLocale
     };
