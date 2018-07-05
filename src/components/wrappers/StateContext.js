@@ -9,7 +9,7 @@ class StateProvider extends React.Component {
     this.state = {
       test: 'Hello World!',
       cocktails: [],
-      updateCocktails: (cocktails) => { this.setState({cocktails: cocktails})} //this.changeLocale
+      updateCocktails: (cocktails) => { this.setState({cocktails: cocktails})}
     };
 
   }

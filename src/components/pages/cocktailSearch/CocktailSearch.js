@@ -90,14 +90,12 @@ class CocktailSearch extends Component {
   handleChange(event) {
     console.log('event: ', event);
 
-    if (!event[0]) {
+    if (!event) {
       console.log('no event');
       return this.setState({filteredCocktails: this.state.allCocktails});
     }
 
-    let filteredCocktails = this.state.allCocktails.filter(cocktail => {
-      return event.some(filterItem => filterItem.value === cocktail.baseSpirit);
-    });
+    let filteredCocktails = this.state.allCocktails.filter(cocktail => cocktail.baseSpirit === event.value);
 
     this.setState({ filteredCocktails: filteredCocktails });
   }
@@ -111,7 +109,7 @@ class CocktailSearch extends Component {
         <div className="cocktailSearch_searchBar">
         <SelectGeneral 
           list={this.state.spirits}
-          allowMultiple={true}
+          allowMultiple={false}
           size={'big'}
           // index={i}
           handleChange={this.handleChange} 
